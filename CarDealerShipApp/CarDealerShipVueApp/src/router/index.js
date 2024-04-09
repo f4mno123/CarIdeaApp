@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import AuthorizationComponent from '../components/AuthorizationComponents/Authorization.vue';
-import Main from '../components/Main.vue'
+import Main from '../components/Main.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,9 +24,14 @@ const router = createRouter({
     {
       path: '/main',
       component: Main
+    },
+    {
+      path: '/:catchAll(.*)',
+      redirect: '/main'
     }
-
   ]
 })
+
+
 
 export default router
