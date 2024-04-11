@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AuthorizationComponent from '../components/AuthorizationComponents/Authorization.vue';
-import Main from '../components/Main.vue';
+import AuthorizationComponent from '../components/Screens/AuthorizationScreen/AuthorizationScreen.vue';
+import Main from '../components/Screens/Main.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

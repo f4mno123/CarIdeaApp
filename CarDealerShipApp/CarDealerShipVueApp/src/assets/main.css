@@ -1,5 +1,13 @@
  * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+ }
+
+ :root {
+   --card_width: 250px;
+   --row_increment: 12px;
+   --card_border_radius: 16px;
+   --card_small: 26;
+   --card_med: 33;
+   --card_large: 45;
  }

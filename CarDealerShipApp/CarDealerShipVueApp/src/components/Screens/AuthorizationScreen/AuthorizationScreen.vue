@@ -5,7 +5,6 @@ const props = defineProps({
     typeOfAuthorization: String,
 })
 
-console.log(props.typeOfAuthorization);
 </script>
 
 
