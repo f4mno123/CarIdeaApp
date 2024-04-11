@@ -15,7 +15,7 @@ const props = defineProps({
     }
     .screen {
         display: flex;
-        background-color: #5FBDFF;
+        background-color: white;
         width: 100vw;
         height: 100vh;
     }
