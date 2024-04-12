@@ -20,7 +20,6 @@ const pikachuClick = () => {
 
 const goHome = () => {
     router.push('/main');
-    window.location.reload();
 }
 const displayMenu = () => {
     shouldDisplayMenu.value = true;
