@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 const props = defineProps({
     postId: Number,
 });
+
 const postId = props.postId;
 const router = useRouter();
 const title = ref('Title');
@@ -22,8 +23,9 @@ function ReturnToNotAnimated() {
     isHovered.value = false;
 }
 function redirectToItemPage() {
-    router.push({ name: 'item', params: { postId: postId }});
+    router.push({ name: 'item', params: { postId: postId }, query: { imageSrc: imageSrc } });
 }
+
 
 </script>
 
