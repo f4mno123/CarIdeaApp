@@ -1,9 +1,7 @@
 <template>
     <HeaderComponent/>
 <div class="content">
-    <template v-for="index in 50">
-        <PostComponent :class="'card card_' + getRandomClass()" />
-    </template>
+    <PostComponent :class="'card card_' + getRandomClass()" v-for="i in 50" :postId="i" />
 </div>
     <footer>
         <h2>Footer</h2>
@@ -15,7 +13,7 @@ import PostComponent from '../ReusableComponents/PostComponent.vue';
 import HeaderComponent from '../ReusableComponents/HeaderComponent.vue';
 
 const getRandomClass = () => {
-    const classes = ['small', 'medium', 'large']
+    const classes = ['small', 'med', 'large']
     return classes[Math.floor(Math.random() * classes.length)]
 }
 </script>

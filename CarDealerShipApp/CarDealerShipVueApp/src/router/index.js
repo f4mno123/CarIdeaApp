@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import AuthorizationComponent from '../components/Screens/AuthorizationScreen/AuthorizationScreen.vue';
-import Main from '../components/Screens/Main.vue';
+const AuthorizationComponent = () => import('../components/Screens/AuthorizationScreen/AuthorizationScreen.vue');
+const Main = () => import('../components/Screens/Main.vue');
+const ItemScreen = () => import('../components/Screens/ItemScreen.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,12 @@ const router = createRouter({
     {
       path: '/main',
       component: Main
+    },
+    {
+      path: '/item/:postId',
+      name: 'item',
+      component: () => import('../components/Screens/ItemScreen.vue'),
+      props: true
     },
     {
       path: '/:catchAll(.*)',

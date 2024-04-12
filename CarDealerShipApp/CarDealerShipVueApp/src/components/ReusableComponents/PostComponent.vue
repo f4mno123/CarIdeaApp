@@ -1,9 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 
+
+
+const props = defineProps({
+    postId: Number,
+});
+const postId = props.postId;
+const router = useRouter();
 const title = ref('Title');
 const isHovered = ref(false);
-
 const imageSrc = 'https://picsum.photos/200/300';
 const altText = 'random image';
 
@@ -14,6 +21,10 @@ function AnimateBlogPost() {
 function ReturnToNotAnimated() {
     isHovered.value = false;
 }
+function redirectToItemPage() {
+    router.push({ name: 'item', params: { postId: postId }});
+}
+
 </script>
 
 <style scoped>
@@ -26,6 +37,7 @@ function ReturnToNotAnimated() {
 
 .postTop {
     height: 80%;
+    width: 100%;
 }
 .card {
     display: flex;
@@ -66,7 +78,7 @@ function ReturnToNotAnimated() {
 </style>
 
 <template>
-    <div @mouseenter="AnimateBlogPost" @mouseleave="ReturnToNotAnimated" ref="div" class="card" :class="{ 'hovered': isHovered }">
+    <div @click="redirectToItemPage" @mouseenter="AnimateBlogPost" @mouseleave="ReturnToNotAnimated" ref="div" class="card" :class="{ 'hovered': isHovered }">
         <div class="postTop">
             <img :src="imageSrc" :alt="altText">
         </div>
