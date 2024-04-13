@@ -1,18 +1,19 @@
 <script setup>
 import axios from '../../../plugins/axios'
-import { defineProps, onMounted } from 'vue';
+import { defineProps, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import ErrorMessage from '../../ReusableComponents/ErrorMessage.vue';
+
 
 const props = defineProps({
     typeOfAuthorization: String,
 })
 
-
+const showError = ref(false)
 const router = useRouter();
 
 
 onMounted( () => {
-    console.log(localStorage.getItem('token'))
     if (localStorage.getItem('token') != null) {
         router.push({ name: 'main', query: { error: 'You are already logged in' }});
     }
@@ -33,8 +34,7 @@ const submitForm = (event) => {
             router.push({ name: 'main' });
         })
         .catch((error) => {
-
-            console.log(error);
+            showError.value = true;
         })
     } else {
         axios.post('https://localhost:8000/api/register', {
@@ -45,11 +45,11 @@ const submitForm = (event) => {
             router.push({ name: 'login' });
         })
         .catch((error) => {
-            console.log(error);
+            showError.value = true;
         })
     }
-
 }
+
 </script>
 
 
@@ -146,6 +146,7 @@ const submitForm = (event) => {
     .emailBox input {
         flex: 1;
     }
+    
 
 
 </style>
@@ -155,11 +156,11 @@ const submitForm = (event) => {
     <div class="screen">
         <div class="box">
             <div class="topBox">
+                <ErrorMessage v-if="showError" error="Invalid Credentials" :duration="5000"/>
                 <h1 class="header-text" v-if="props.typeOfAuthorization == 'login'">login</h1>
                 <h1 class="header-text" v-else="props.typeOfAuthorization == 'register'">register</h1>
             </div>
             <div class="bottomBox">
-                <!--TODO when props.typeOfAuthorization is login then make a request to proper route -->
                 <form @submit="submitForm">
                     <div class="emailBox">
                         <label for="username">Email: </label>

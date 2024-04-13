@@ -1,7 +1,6 @@
 <script setup>
 
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
 const isSearchInputDisplayed = ref(false);
@@ -35,6 +34,9 @@ const logout = () => {
     router.push('/auth/login');
 }
 
+const navigateToLoginPage = () => {
+    router.push('/auth/login');
+}
 </script>
 
 <style scoped>
@@ -194,7 +196,7 @@ input {
                     <li>Home</li>
                     <li>Profile</li>
                     <li>Settings</li>
-                    <li><a href="/auth/login">Login</a></li>
+                    <li @click="navigateToLoginPage">Login</li>
                     <li @click="logout">Logout</li>
                 </ul>
             </div>
