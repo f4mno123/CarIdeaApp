@@ -1,5 +1,6 @@
 <template>
     <HeaderComponent/>
+    <h1 v-if="error">{{ error }}</h1>
 <div class="content">
     <PostComponent :class="'card card_' + getRandomClass()" v-for="i in 50" :postId="i" />
 </div>
@@ -11,11 +12,21 @@
 <script setup>
 import PostComponent from '../ReusableComponents/PostComponent.vue';
 import HeaderComponent from '../ReusableComponents/HeaderComponent.vue';
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const error = route.query.error;
 
 const getRandomClass = () => {
     const classes = ['small', 'med', 'large']
     return classes[Math.floor(Math.random() * classes.length)]
 }
+
+onMounted(() => {
+    console.log(localStorage.getItem('token'))
+
+})
 </script>
 
 <style scoped>

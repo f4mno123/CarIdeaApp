@@ -1,10 +1,55 @@
 <script setup>
-
+import axios from '../../../plugins/axios'
+import { defineProps, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     typeOfAuthorization: String,
 })
 
+
+const router = useRouter();
+
+
+onMounted( () => {
+    console.log(localStorage.getItem('token'))
+    if (localStorage.getItem('token') != null) {
+        router.push({ name: 'main', query: { error: 'You are already logged in' }});
+    }
+});
+
+
+const submitForm = (event) => {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    if (props.typeOfAuthorization == 'login') {
+        axios.post('https://localhost:8000/api/login_check', {
+            username: username,
+            password: password
+        })
+        .then((response) => {
+            localStorage.setItem('token', response.data.token);
+            router.push({ name: 'main' });
+        })
+        .catch((error) => {
+
+            console.log(error);
+        })
+    } else {
+        axios.post('https://localhost:8000/api/register', {
+            email: username,
+            password: password
+        })
+        .then(() => {
+            router.push({ name: 'login' });
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
+}
 </script>
 
 
@@ -115,7 +160,7 @@ const props = defineProps({
             </div>
             <div class="bottomBox">
                 <!--TODO when props.typeOfAuthorization is login then make a request to proper route -->
-                <form>
+                <form @submit="submitForm">
                     <div class="emailBox">
                         <label for="username">Email: </label>
                         <input type="text" id="username" placeholder="username" autocomplete="username" />

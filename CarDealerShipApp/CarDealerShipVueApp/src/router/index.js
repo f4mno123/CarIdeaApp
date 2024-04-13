@@ -12,19 +12,22 @@ const router = createRouter({
         {
           path: 'login',
           component: AuthorizationComponent,
-          props: { typeOfAuthorization: 'login'}
+          props: { typeOfAuthorization: 'login'},
+          name: 'login'
         },
         {
           path: 'register',
           component: AuthorizationComponent,
-          props: { typeOfAuthorization: 'register'}
+          props: { typeOfAuthorization: 'register'},
+          name: 'register'
         }
 
       ]
     },
     {
       path: '/main',
-      component: Main
+      component: Main,
+      name: 'main'
     },
     {
       path: '/item/:postId',
@@ -34,7 +37,12 @@ const router = createRouter({
     },
     {
       path: '/:catchAll(.*)',
-      redirect: '/main'
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem('token')) {
+          next('/main');
+        }
+        next('/login');
+      }
     }
   ]
 })

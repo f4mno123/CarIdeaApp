@@ -30,6 +30,11 @@ const hideMenu = () => {
     isHoveredOver.value = false;
 }
 
+const logout = () => {
+    localStorage.removeItem('token');
+    router.push('/auth/login');
+}
+
 </script>
 
 <style scoped>
@@ -190,7 +195,7 @@ input {
                     <li>Profile</li>
                     <li>Settings</li>
                     <li><a href="/auth/login">Login</a></li>
-                    <li>Logout</li>
+                    <li @click="logout">Logout</li>
                 </ul>
             </div>
         </div>
