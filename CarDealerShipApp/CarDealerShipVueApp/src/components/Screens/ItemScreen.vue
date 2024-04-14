@@ -1,21 +1,27 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 import HeaderComponent from '../ReusableComponents/HeaderComponent.vue';
 import { useRoute } from 'vue-router';
+import { useCartStore } from '@/stores/cart';
 
 const props = defineProps({
     postId: Number,
 });
 
+
+const cart = useCartStore();
 const route = useRoute();
 const postId = props.postId;
 const imageSrc = route.query.imageSrc; 
 const itemName = route.query.itemName;
 const price = route.query.price;
 const itemDescription = route.query.itemDescription;
+const cartItems = ref([]);
 
 const addToCart = () => {
-    console.log('Added to cart');
+    const newItem = { itemName, price, imageSrc }; 
+    cart.addNewItem(newItem);
+    cartItems.value.push(newItem);
 }
 
 </script>
@@ -110,7 +116,7 @@ const addToCart = () => {
 </style>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent :imageSrc="imageSrc" :price="price" :itemName="itemName"/>
     <div class="main">
         <div class="mainTop">
             <div class="imgDiv">

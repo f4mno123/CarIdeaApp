@@ -49,7 +49,6 @@ h1 {
 <template>
     <HeaderComponent />
     <div>
-        <h1>Own Listings</h1>
         <div class="content">
             <PostComponent class="post" v-for="item in itemsToDisplay" :itemDescription="item.itemDescription" :postId="item.id" :key="item.id" :item="item" :imageSrc="item.imageLinkBlob" :price="item.price" :itemName="item.itemName"/>
         </div>

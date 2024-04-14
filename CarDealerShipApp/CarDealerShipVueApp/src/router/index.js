@@ -3,6 +3,8 @@ const AuthorizationComponent = () => import('../components/Screens/Authorization
 const Main = () => import('../components/Screens/Main.vue');
 const ItemScreen = () => import('../components/Screens/ItemScreen.vue');
 const OwnListings = () => import('../components/Screens/OwnListings.vue');
+const PageNotFound = () => import('../components/Screens/PageNotFound.vue');
+const CartComponent = () => import('../components/ReusableComponents/CartComponent.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,26 +46,18 @@ const router = createRouter({
 
     {
       path: '/:catchAll(.*)',
-      beforeEnter: (to, from, next) => {
-        if (localStorage.getItem('token')) {
-          next('/main');
-        }
-        next('/login');
-      }
+      component: () => import('../components/Screens/PageNotFound.vue')
     }
+    
   ]
 })
 
 
-router.beforeEach(async (to, from, next) => {
-  if (to.path === '/auth/login' || to.path === '/auth/register') {
-    next();
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && to.name !== 'register' && !localStorage.getItem('token')) {
+    next('/auth/login');
   } else {
-    if (localStorage.getItem('token')) {
-      next();
-    } else {
-      next('/auth/login');
-    }
+    next();
   }
 });
 
