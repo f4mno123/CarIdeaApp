@@ -13,8 +13,10 @@ const imageSrc = route.query.imageSrc;
 const itemName = route.query.itemName;
 const price = route.query.price;
 const itemDescription = route.query.itemDescription;
-console.log(imageSrc);
-console.log(itemName);
+
+const addToCart = () => {
+    console.log('Added to cart');
+}
 
 </script>
 
@@ -122,7 +124,7 @@ console.log(itemName);
             </div>
             
         </div>
-        <div class="actionsButtonsDiv">
+        <div class="actionsButtonsDiv" @click="addToCart">
             <v-icon 
                 class="actionButtons"
                 name="co-cart"

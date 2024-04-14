@@ -41,6 +41,11 @@ const navigateToLoginPage = () => {
 const navigateToOwnListingsPage = () => {
     router.push('/own-listings');
 }
+
+const navigateToCart = () => {
+    router.push('/cart');
+}
+
 </script>
 
 <style scoped>
@@ -124,7 +129,7 @@ input {
     position: absolute;
     top: 7.5%;
     left: 85%;
-    height: 26vh;
+    height: 31vh;
     width: 15vw;
     background-color: #87D7E5;
     align-items: end;
@@ -200,6 +205,7 @@ input {
                     <li @click="navigateToOwnListingsPage">Manage your listings</li>
                     <li>Profile</li>
                     <li>Settings</li>
+                    <li @click="navigateToCart">Cart</li>
                     <li @click="navigateToLoginPage">Login</li>
                     <li @click="logout">Logout</li>
                 </ul>
