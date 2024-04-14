@@ -10,7 +10,11 @@ const props = defineProps({
 const route = useRoute();
 const postId = props.postId;
 const imageSrc = route.query.imageSrc; 
+const itemName = route.query.itemName;
+const price = route.query.price;
+const itemDescription = route.query.itemDescription;
 console.log(imageSrc);
+console.log(itemName);
 
 </script>
 
@@ -40,7 +44,7 @@ console.log(imageSrc);
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 70%; /* Change height to 100% */
+    height: 70%; 
     background-color: lightblue;
     
 }
@@ -69,6 +73,7 @@ console.log(imageSrc);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
     width: 50vw;
     background-color: lightcoral;
     height: 50vh; 
@@ -95,6 +100,11 @@ console.log(imageSrc);
 .actionButtons:hover {
     background-color: #87D7E5;
 }
+
+.mainBottom h1 {
+    font-size: 24px;
+    margin: 10px;
+}
 </style>
 
 <template>
@@ -103,13 +113,13 @@ console.log(imageSrc);
         <div class="mainTop">
             <div class="imgDiv">
                 <img :src="imageSrc" alt="placeholder" />
-                <h1>Item Name</h1>
-                <p>Price</p>
+                <h1>{{ itemName }}</h1>
+                <p>{{ price }}</p>
             </div>
+
             <div class="mainBottom">
-            <h1>Item Description</h1>
-            <p>Post ID: {{ postId }}</p>
-        </div>
+                <h1>{{ itemDescription }}</h1>
+            </div>
             
         </div>
         <div class="actionsButtonsDiv">

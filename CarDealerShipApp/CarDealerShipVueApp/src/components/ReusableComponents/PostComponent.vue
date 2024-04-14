@@ -6,14 +6,21 @@ import { useRouter } from 'vue-router';
 
 const props = defineProps({
     postId: Number,
+    imageSrc: String,
+    price: Number,
+    itemDescription: String,
+    itemName: String
 });
 
 const postId = props.postId;
+const itemName = props.itemName;
+const imageSrc = props.imageSrc;
+const price = props.price;
+const itemDescription = props.itemDescription;
+
 const router = useRouter();
-const title = ref('Title');
 const isHovered = ref(false);
-const imageSrc = 'https://picsum.photos/200/300';
-const altText = 'random image';
+const altText = 'img';
 
 function AnimateBlogPost() {
     isHovered.value = true;
@@ -23,7 +30,7 @@ function ReturnToNotAnimated() {
     isHovered.value = false;
 }
 function redirectToItemPage() {
-    router.push({ name: 'item', params: { postId: postId }, query: { imageSrc: imageSrc } });
+    router.push({ name: 'item', params: { postId: postId }, query: { imageSrc, price, itemDescription, itemName } });
 }
 
 
@@ -32,9 +39,10 @@ function redirectToItemPage() {
 <style scoped>
 .postBottom {
     height: 20%;
-    background-color: lightgray;
+    background-color: white;
     border-radius: 0;
     text-align: center;
+    
 }
 
 .postTop {
@@ -85,7 +93,8 @@ function redirectToItemPage() {
             <img :src="imageSrc" :alt="altText">
         </div>
         <div class="postBottom">
-            <h2>{{ title }}</h2>
+            <h2>{{ itemName }}</h2>
+            <p>{{ price }}$</p>
         </div>
     </div>
 </template>

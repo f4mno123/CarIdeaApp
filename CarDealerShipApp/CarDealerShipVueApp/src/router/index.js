@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 const AuthorizationComponent = () => import('../components/Screens/AuthorizationScreen/AuthorizationScreen.vue');
 const Main = () => import('../components/Screens/Main.vue');
 const ItemScreen = () => import('../components/Screens/ItemScreen.vue');
+const OwnListings = () => import('../components/Screens/OwnListings.vue');
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,12 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/own-listings',
+      name: 'own-listings',
+      component: () => import('../components/Screens/OwnListings.vue')
+    },
+
+    {
       path: '/:catchAll(.*)',
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem('token')) {
@@ -46,6 +53,19 @@ const router = createRouter({
     }
   ]
 })
+
+
+router.beforeEach(async (to, from, next) => {
+  if (to.path === '/auth/login' || to.path === '/auth/register') {
+    next();
+  } else {
+    if (localStorage.getItem('token')) {
+      next();
+    } else {
+      next('/auth/login');
+    }
+  }
+});
 
 
 

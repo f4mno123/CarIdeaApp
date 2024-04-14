@@ -37,6 +37,10 @@ const logout = () => {
 const navigateToLoginPage = () => {
     router.push('/auth/login');
 }
+
+const navigateToOwnListingsPage = () => {
+    router.push('/own-listings');
+}
 </script>
 
 <style scoped>
@@ -193,7 +197,7 @@ input {
                 class="icon"/>
             <div class="dropDownMenu" v-if="shouldDisplayMenu">
                 <ul>
-                    <li>Home</li>
+                    <li @click="navigateToOwnListingsPage">Manage your listings</li>
                     <li>Profile</li>
                     <li>Settings</li>
                     <li @click="navigateToLoginPage">Login</li>
