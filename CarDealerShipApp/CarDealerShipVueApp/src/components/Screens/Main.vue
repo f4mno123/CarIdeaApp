@@ -27,6 +27,7 @@ const getRandomClass = () => {
 }
 
 onBeforeMount(() => {
+    
     axios.get('https://localhost:8000/api/selling-items')
     .then((response) => {
         itemsToDisplay.value = response.data

@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref, defineProps, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
 
@@ -12,32 +12,46 @@ const isCartHoveredOver = ref(false);
 const shouldDisplayCart = ref(false);
 
 const shouldDisplayEmptyCart = ref(true);
-
-const router = useRouter();
 const cart = useCartStore();
 
-let itemName = ref('');
-let price = ref(0);
-let imageSrc = ref('');
+const router = useRouter();
+let shoppingCartItems = ref([]);
 
-console.log(cart.getItemList);
-//iterate over cart.getItemList and display all items in the cart
 
-if (cart.getItemList.length > 0){
-    itemName.value = cart.getItemList[cart.getItemList.length - 1].itemName;
-    price.value = cart.getItemList[cart.getItemList.length - 1].price;
-    imageSrc.value = cart.getItemList[cart.getItemList.length - 1].imageSrc;
-    shouldDisplayEmptyCart.value = false;
-
-}
-
-watch(cart.getItemList, async(newValue) => {
-    itemName.value = newValue[newValue.length - 1].itemName;
-    price.value = newValue[newValue.length - 1].price;
-    imageSrc.value = newValue[newValue.length - 1].imageSrc;
-    shouldDisplayEmptyCart.value = false;
-
+onMounted(() => {
+    if (localStorage.getItem('cartItems') !== null) {
+        shoppingCartItems =  JSON.parse(localStorage.getItem('cartItems'));
+        shouldDisplayEmptyCart.value = false;
+    }
+    else if (cart.getItemList.length > 0){
+        shoppingCartItems = cart.getItemList;
+        shouldDisplayEmptyCart.value = false;
+    }
+    else {
+        shouldDisplayEmptyCart.value = true;
+    }
 })
+
+
+// if (cart.getItemList.length > 0){
+//     itemName.value = cart.getItemList[cart.getItemList.length - 1].itemName;
+//     price.value = cart.getItemList[cart.getItemList.length - 1].price;
+//     imageSrc.value = cart.getItemList[cart.getItemList.length - 1].imageSrc;
+//     shouldDisplayEmptyCart.value = false;
+
+// }
+
+// watch(localStorage.getItem('cartItems'), async(newValue) => {
+//     console.log(newValue);
+//     if (newValue !== null){
+//         const cartItems = JSON.parse(newValue);
+//         console.log(cartItems);
+//         cartItems.forEach((item) => {
+//             cart.addNewItem(item);
+//         })
+//     }
+
+// })
 
 const displaySearchInput = () => {
     isSearchInputDisplayed.value = !isSearchInputDisplayed.value;
@@ -229,6 +243,7 @@ input {
 .dropDownCartImg img {
     width: 40%;
     height: 90%;
+    margin: 10px;
 }
 
 
@@ -241,6 +256,9 @@ input {
     color: white;
     font-size: 18px;
 
+}
+.dropDownCartBottom button:hover {
+    background-color: #5848B7;
 }
 .cartHovered {
     background-color: #87D7E5;
@@ -302,8 +320,8 @@ input {
                 <div class="dropDownCartTop" v-if="!shouldDisplayEmptyCart">
                     <h1>Cart</h1>
                 </div>
-                <div v-for="item in cart.getItemList" class="dropDownCartImg" v-if="!shouldDisplayEmptyCart">
-                    <img :src="imageSrc" alt="alt image" width="50" height="50"/>
+                <div v-for="(item, index) in shoppingCartItems" class="dropDownCartImg" v-if="!shouldDisplayEmptyCart">
+                    <img :src="item.imageSrc" alt="alt image" width="50" height="50"/>
                     <div class="dropDownCartImgText">
                         <p>{{ item.itemName }}</p>
                         <br>

@@ -10,6 +10,7 @@ axios.interceptors.request.use((config) => {
       ...modifiedConfig.headers,
       Authorization: `Bearer ${token}`,
     };
+    console.log(token)
     return modifiedConfig;  
   }
   localStorage.removeItem('token');

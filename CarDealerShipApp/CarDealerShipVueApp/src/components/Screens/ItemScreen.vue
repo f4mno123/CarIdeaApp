@@ -1,28 +1,37 @@
 <script setup>
-import { defineProps, ref } from 'vue';
 import HeaderComponent from '../ReusableComponents/HeaderComponent.vue';
 import { useRoute } from 'vue-router';
 import { useCartStore } from '@/stores/cart';
+import { onMounted, ref } from 'vue';
 
-const props = defineProps({
-    postId: Number,
-});
-
-
-const cart = useCartStore();
 const route = useRoute();
-const postId = props.postId;
+const cart = useCartStore();
 const imageSrc = route.query.imageSrc; 
 const itemName = route.query.itemName;
 const price = route.query.price;
 const itemDescription = route.query.itemDescription;
 const cartItems = ref([]);
 
+
+onMounted(() => {
+    if (localStorage.getItem('cartItems') !== null) {
+        cartItems.value = JSON.parse(localStorage.getItem('cartItems'));
+    }
+    else if (cart.getItemList.length > 0){
+        cartItems.value = cart.getItemList;
+    }
+    else {
+        cartItems.value = [];
+    }
+})
+
 const addToCart = () => {
-    const newItem = { itemName, price, imageSrc }; 
-    cart.addNewItem(newItem);
+    const newItem = { itemName, price, imageSrc };    
     cartItems.value.push(newItem);
+    cart.addNewItem(newItem);
+    localStorage.setItem('cartItems', JSON.stringify(cart.getItemList));
 }
+
 
 </script>
 
